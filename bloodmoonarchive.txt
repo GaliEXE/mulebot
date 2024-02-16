@@ -1,0 +1,106 @@
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('moontick')
+        .setDescription('Starts the Blood Moon Timer')
+        .addChannelOption(option =>
+            option.setName('channel')
+                .setDescription('The Channel to Send the Blood Moon Warnings')
+                .setRequired(true)),
+
+    async execute(interaction) {
+
+        await interaction.deferReply();
+
+        await interaction.editReply({ content: 'Blood Moon Notifications Enabled!'})
+        
+        let initializeOne = false;
+        let initializeTwo = false;
+        let initializeThree = false;
+
+        setTimeout(() => risingSoon(), 4800000);
+        initializeOne = true;
+        if(initializeOne){
+            setInterval(() => risingSoon(), 7200000);
+        }
+        setTimeout(() => danger(), 6000000);
+        initializeTwo = true;
+        if(initializeTwo){
+            setInterval(() => danger(), 7200000); 
+        }
+        setTimeout(() => moonRisen(), 7200000);
+        initializeThree = true;
+        if(initializeThree){
+            setInterval(() => moonRisen(), 7200000);
+        }
+
+
+        async function risingSoon() {
+
+            const moonEmbed1 = new EmbedBuilder()
+                .setColor(16711680)
+                .setTitle("The Blood Moon Is Coming!")
+                .setDescription("The blood is rising soon last chance to log off.")
+                .setFooter({
+                    text: 'Created By Gali.exe For The Muletopia Community',
+                    iconURL: "https://raw.githubusercontent.com/GaliEXE/Bridge-Duels-Bot/main/ChannelLogo.png"
+                });
+
+            const channelId = interaction.options.getChannel('channel').id;
+            const channel = interaction.client.channels.cache.get(channelId);
+
+            if (channel) {
+                await channel.send({ embeds: [moonEmbed1] })
+                await interaction.editReply({ content: 'Embed Successfully Inserted!', ephemeral: true });
+            } else {
+                console.log('Specified channel not found');
+                await interaction.editReply({ content: 'Specified channel not found' });
+            }
+        }
+
+        async function danger(){
+            const moonEmbed2 = new EmbedBuilder()
+            .setColor(16711680)
+            .setTitle("The Blood Moon Is Rising!")
+            .setDescription("It is Day 4, **Do NOT Log In Or Out**")
+            .setFooter({
+                text: 'Created By Gali.exe For The Muletopia Community',
+                iconURL: "https://raw.githubusercontent.com/GaliEXE/Bridge-Duels-Bot/main/ChannelLogo.png"
+            });
+
+            const channelId = interaction.options.getChannel('channel').id;
+            const channel = interaction.client.channels.cache.get(channelId);
+
+            
+            if (channel) {
+                await channel.send({ embeds: [moonEmbed2] })
+                await interaction.editReply({ content: 'Embed Successfully Inserted!', ephemeral: true });
+            } else {
+                console.log('Specified channel not found');
+                await interaction.editReply({ content: 'Specified channel not found' });
+            }
+        }
+
+        async function moonRisen(){
+            const moonEmbed3 = new EmbedBuilder()
+            .setColor(34560)
+            .setTitle("The Blood Moon Has Risen")
+            .setDescription("It is safe to log on or off now!")
+            .setFooter({
+                text: 'Created By Gali.exe For The Muletopia Community',
+                iconURL: "https://raw.githubusercontent.com/GaliEXE/Bridge-Duels-Bot/main/ChannelLogo.png"
+            });
+
+            const channelId = interaction.options.getChannel('channel').id;
+            const channel = interaction.client.channels.cache.get(channelId);
+
+            
+            if (channel) {
+                await channel.send({ embeds: [moonEmbed3] })
+                await interaction.editReply({ content: 'Embed Successfully Inserted!', ephemeral: true });
+            } else {
+                console.log('Specified channel not found');
+                await interaction.editReply({ content: 'Specified channel not found' });
+            }
+        }
+    }
+};

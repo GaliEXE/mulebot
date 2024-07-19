@@ -6,7 +6,7 @@ module.exports = {
     once: true,
     async execute(client) {
         const customStatus = {
-            text: 'Down For Server Transition',
+            text: 'Version 1.1 Alpha',
             details: 'Working on cool features!'
         };
 
